@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import type { Book } from '@prisma/client';
+import type { Book } from '../../generated/prisma/client';
 
 type BookFormProps = {
   book?: Book; // Optional book data for editing
