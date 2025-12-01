@@ -13,9 +13,12 @@ export async function POST(request: NextRequest) {
             return new NextResponse(JSON.stringify({ error: 'Credenciais inválidas' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
         }
 
-        // For now return basic user info (no tokens)
+        // For now return basic user info and set a simple session cookie (userId)
         const { password: _p, ...safe } = user as any;
-        return NextResponse.json(safe);
+        const res = NextResponse.json(safe);
+        // set cookie 'userId' (HttpOnly)
+        res.cookies.set('userId', user.id, { httpOnly: true, path: '/' });
+        return res;
     } catch (error) {
         console.error(error);
         return new NextResponse(JSON.stringify({ error: 'Erro ao autenticar' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
